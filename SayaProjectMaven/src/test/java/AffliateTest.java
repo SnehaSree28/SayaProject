@@ -37,8 +37,6 @@ public class AffliateTest extends WebDriverTest {
 //        affiliate.userName("abcdef@123");
 //        affiliate.password("abcdef@123");
 //        affiliate.saveButton();
-
-
         affiliate.affiliateTable();
         System.out.println("Contents Viewed successfully");
     }

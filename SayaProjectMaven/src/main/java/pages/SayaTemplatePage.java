@@ -24,7 +24,7 @@ public class SayaTemplatePage extends WebDriverTest {
     @FindBy(xpath = "//*[contains(text(),'My Content')]//parent::a")
     public WebElement clickMyContent;
 
-    @FindBy(xpath = "//span[contains(text(),'My Displays')]")
+    @FindBy(xpath = "//span[@class='fa fa-object-group']")
     public WebElement myDisplays;
 
 
@@ -58,6 +58,7 @@ public class SayaTemplatePage extends WebDriverTest {
     {
         webDriverWait.until(ExpectedConditions.visibilityOf(mysignage));
         Actions actions = new Actions(driver);
+        webDriverWait.until(ExpectedConditions.visibilityOf(myDisplays));
         actions.moveToElement(myDisplays).build().perform();
         return new GroupsPage();
     }

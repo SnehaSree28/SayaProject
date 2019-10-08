@@ -19,6 +19,7 @@ public class CPCreationMethod extends CPCreation {
         cpCreation.addButtonOfCP.click();
         webDriverWait.until(ExpectedConditions.visibilityOf(cpCreation.getFirstName()));
         cpCreation.getFirstName().sendKeys(firstName);
+
         cpCreation.getLastName().sendKeys(lastName + CommonMethods.randomChar());
     }
 

@@ -11,10 +11,9 @@ import enums.PaginationValues;
 import methods.IncoisAppsMethod;
 import methods.LoginPageMethod;
 import methods.MyContentPageMethod;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebElement;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
@@ -39,8 +38,9 @@ public class MyContentTest extends WebDriverTest {
     SayaTemplatePage sayaTemplatePage = null;
     IncoisAppsMethod incoisAppsMethod = null;
     MyContentPageMethod myContentPageMethod = null;
+    public static Logger log = Logger.getLogger(MyContentTest.class.getName());
 
-    @BeforeClass
+   @BeforeClass
     public void login() {
         loginPageMethod = new LoginPageMethod();
         incoisAppsMethod = new IncoisAppsMethod();
@@ -89,6 +89,7 @@ public class MyContentTest extends WebDriverTest {
     public boolean elementsVisibleOrNot(String element) {
         boolean x = driver.findElement(By.xpath("(//*[text()='" + element + "'])[2]")).isDisplayed();
         return x;
+
     }
 
     @Test
@@ -201,6 +202,7 @@ public class MyContentTest extends WebDriverTest {
             if (paginationValues.toString() == pageNo) {
                 WebElement table = driver.findElement(By.xpath("//table[@class='table table-bordered']//tbody"));
                 List<WebElement> rows=table.findElements(By.tagName("tr"));
+
                 int rowCount=rows.size();
                 for(int i =0; i < rowCount; i++){
                     try{
@@ -226,36 +228,68 @@ public class MyContentTest extends WebDriverTest {
     }
 
     @Test
-    public void test1(){
-        MyContentPageMethod myContentPageMethod= new MyContentPageMethod();
-        for(PaginationValues paginationValues: PaginationValues.values()){
+    public void test1() {
+        MyContentPageMethod myContentPageMethod = new MyContentPageMethod();
+        for (PaginationValues paginationValues : PaginationValues.values()) {
             myContentPageMethod.myContentPaginationElements(paginationValues.toString());
             CommonJavaScriptMethods.scrollDown("0,150");
 
         }
     }
 
-    @Test
-    public void iteratingTableContent(){
-        myContentPageMethod = new MyContentPageMethod();
-        CommonJavaScriptMethods.scrollDown("0,100");
-        WebElement table = driver.findElement(By.xpath("//table[@class='table table-bordered']//tbody"));
-        List<WebElement> rows=table.findElements(By.tagName("tr"));
-        int rowCount=rows.size();
-        for(int i =0; i < rowCount; i++){
-            List<WebElement> columns = rows.get(i).findElements(By.tagName("td"));
-            int columnCOunt=columns.size();
-            for(int j=0;j <columnCOunt;j++){
-                              String cellText=columns.get(j).getText();
-                            if(cellText.equalsIgnoreCase("bo")){
-                               myContentPageMethod.paginationElement("bo");
+        @Test
+                public void multipleTabs() throws InterruptedException {
+            /*driver.findElement(By.id("txtActorUserName")).sendKeys("Sneha");
+            driver.findElement(By.id("txtActorPassword")).sendKeys("gaian@123");
+            driver.findElement(By.name("btnLogin")).click();*/
+            WebElement mySignage=driver.findElement(By.xpath("//span[contains(text(),'My Signage')]"));
+            //WebElement myDesigner=driver.findElement(By.xpath("//*[contains(text(), 'My Designer')]"));
+            WebElement myDesignerID=driver.findElement(By.id("A1"));
 
-                }
-            }
+            Actions actions = new Actions(driver);
+            actions.moveToElement(mySignage).build().perform();
+            Thread.sleep(5000);
+
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+            //actions.moveToElement(myDesigner).build().perform();
+            actions.doubleClick(myDesignerID).build().perform();
+            Thread.sleep(5000);
+
+            String parentWindow= driver.getWindowHandle();
+            ArrayList<String> list=  new ArrayList (driver.getWindowHandles());
+            String title = driver.getTitle();
+            System.out.println("Title is-------------- "+title);
+            driver.switchTo().window(list.get(1));
+            driver.switchTo().window(parentWindow);
+            driver.findElement(By.id("ctl00_ContentPlaceHolder1_txtSearch")).sendKeys("Prest");
+  //          driver.findElement()
+
+
+            //   driver.switchTo().window(list.get(0));
+            //Zoom Out
+            /*mySignage.sendKeys(Keys.chord(Keys.CONTROL),Keys.ADD);
+            //Zoom In
+            mySignage.sendKeys(Keys.chord(Keys.CONTROL),"0");
+            Thread.sleep(5000);*/
+        }
+
+        @Test
+    public void log(){
+        if(5>4){
+            log.info("condition is true");
+            System.out.println("----");
+        }
+        else{
+            System.out.println("False");
+            log.debug("Condition");
+
+        }
         }
     }
 
-}
+
+
+
 
 
 

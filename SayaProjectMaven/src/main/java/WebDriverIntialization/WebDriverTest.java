@@ -31,12 +31,11 @@ public  static void launchDriver() {
         } else if (PropertyFileUtil.getValueForKey("selenium.defaultbrowser").equalsIgnoreCase("firefox")) {
             System.setProperty("webdriver.firefox.driver", "./server/geckodriver");
             driver = new FirefoxDriver();
-
         }
         driver.manage().window().maximize();
         driver.get(PropertyFileUtil.getValueForKey("env.baseurl"));
-
     }
+
     public static void openAdminPage(WebDriver driver){
      driver.get(PropertyFileUtil.getValueForKey("admin.baseurl"));
         }

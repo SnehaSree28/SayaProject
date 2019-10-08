@@ -1,7 +1,5 @@
 package methods;
 
-import com.sun.deploy.security.SelectableSecurityManager;
-import com.sun.javafx.binding.Logging;
 import common.CommonConstants;
 import common.CommonMethods;
 import common.Waiting;

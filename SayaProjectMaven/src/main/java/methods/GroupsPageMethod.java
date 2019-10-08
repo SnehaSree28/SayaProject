@@ -9,6 +9,8 @@ import pages.GroupsPage;
  */
 public class GroupsPageMethod extends GroupsPage {
     public void createGroup(){
+
+
         getCreateGroup().sendKeys(CommonMethods.randomChar()+CommonMethods.getCurrentTimeStamp());
         getDescription().sendKeys(CommonMethods.randomChar()+CommonMethods.getCurrentTimeStamp());
         getStartDate().sendKeys(CommonMethods.getCurrentTimeStamp());
